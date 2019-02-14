@@ -1,0 +1,8 @@
+Thumbs.db
+.git/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.so
