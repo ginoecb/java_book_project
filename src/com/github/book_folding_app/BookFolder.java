@@ -4,23 +4,24 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BookFolder {
-    String img_name;
-    float height, width, px_height;
-    float num_pages;
-    float offset_front, offset_back;
-    float min_cut_len;
-    short tolerance;
+    private String img_name;
+    private float height, width, px_height;
+    private float num_pages;
+    private float offset_front, offset_back;
+    private float min_cut_len;
+    private short tolerance;
+    private Scanner scanner = new Scanner(System.in);
 
-    //get_image
+    //get_image()
 
     // Gets string input from user
-    String get_str(String message, Scanner scanner) {
+    private String get_str(String message) {
         System.out.println(message);
         return scanner.nextLine();
     }
 
     // Gets float input from user
-    float get_num(String message, Scanner scanner, float min, float max) {
+    private float get_num(String message, float min, float max) {
         float num;
         while (true) {
             System.out.println(message);
@@ -39,8 +40,28 @@ public class BookFolder {
         return num;
     }
 
+    // Gets short input from user
+    private short get_num(String message, short min, short max) {
+        short num;
+        while (true) {
+            System.out.println(message);
+            if(scanner.hasNextFloat()) {
+                num = scanner.nextShort();
+                if (num >= min && num <= max) {
+                    break;
+                } else {
+                    System.out.format("ERROR: Input must be between %d and %d\n", min, max);
+                }
+            }
+            else {
+                System.out.println("ERROR: Input must be a number\n");
+            }
+        }
+        return num;
+    }
+
     // Determine cut distance(s) for a given page
-    ArrayList<Float> get_page_cuts(int[] arr, float min_cut_len, int tolerance, float px_height, float height) {
+    private ArrayList<Float> get_page_cuts(int[] arr) {
         ArrayList<Float> cuts = new ArrayList<>();
         boolean start_cut = true;
         for (int i = 0; i < arr.length; i++) {
@@ -51,7 +72,7 @@ public class BookFolder {
             else if (arr[i] >= tolerance && !start_cut) {
                 cuts.add((float)i);
                 start_cut = true;
-                cuts = check_page_cuts(cuts, min_cut_len, px_height, height);
+                cuts = check_page_cuts(cuts);
             }
         }
         if (!start_cut) {
@@ -61,7 +82,7 @@ public class BookFolder {
     }
 
     // Removes cut instructions if less than minimum cut length
-    ArrayList<Float> check_page_cuts(ArrayList<Float> cuts, float min_cut_len, float px_height, float height) {
+    private ArrayList<Float> check_page_cuts(ArrayList<Float> cuts) {
         int end = cuts.size() - 1;
         // if get_height
         if (cuts.get(end) - cuts.get(end - 1) < min_cut_len) {
@@ -71,32 +92,36 @@ public class BookFolder {
         return cuts;
     }
 
-    float get_height(float num, float px_height, float height) {
+    private float get_height(float num, float px_height, float height) {
         return num / px_height * height;
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        BookFolder bf = new BookFolder();
-        bf.img_name = bf.get_str("\nEnter filename of image\n" +
-                " This image should be black--and-white only\n> ", scanner);
-        bf.height = bf.get_num("\nEnter page height in inches\n> ", scanner, 0, Float.MAX_VALUE);
-        bf.num_pages = bf.get_num("\nEnter number of pages in book\n" +
+    private void run() {
+        // Get dimensions from user input
+        img_name = get_str("\nEnter filename of image\n" +
+                " This image should be black--and-white only\n");
+        height = get_num("\nEnter page height in inches\n",
+                0, Float.MAX_VALUE);
+        num_pages = get_num("\nEnter number of pages in book\n" +
                 " Numbered pages (with different numbers on front and back) will count as a single page\n" +
-                " Be sure to include non-numbered pages\n> ", scanner, 0, Float.MAX_VALUE);
+                " Be sure to include non-numbered pages\n", 0, Float.MAX_VALUE);
+        offset_front = get_num("\nEnter number of pages to offset image from the front cover\n",
+                0, num_pages);
+        offset_back = get_num("\nEnter number of pages to offset image from the back cover\n",
+                0, num_pages);
+        min_cut_len = get_num("\nEnter the minimum cut length in inches for each page\n",
+                0, height);
+        tolerance = get_num("\nInput a black-white pixel tolearnce (0 - 255)\n" +
+                " All values above this will not be considered part of the image\n",
+                (short)0, (short)255);
+        width = num_pages - offset_front - offset_back;
+        // 1 in : 96 px
+        px_height = height * 96;
 
+    }
 
-
-
-
-        /*
-        bf.tolerance = 2;
-        bf.min_cut_len = 0.2f;
-        int[] arr = {0, 5, 5, 5, 0, 0, 0, 0, 5, 5, 5, 5, 0, 5, 0, 5, 0, 0, 5};
-        ArrayList<Float> cuts = bf.get_page_cuts(arr, bf.min_cut_len, bf.tolerance, 0, 0);
-        for (Float i : cuts){
-            System.out.println(i);
-        }
-        */
+    public static void main(String[] args) {
+        BookFolder bookFolder = new BookFolder();
+        bookFolder.run();
     }
 }
