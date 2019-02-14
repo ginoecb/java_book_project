@@ -12,7 +12,10 @@ public class BookFolder {
     private short tolerance;
     private Scanner scanner = new Scanner(System.in);
 
-    //get_image()
+    // Retrieves specified image as a 2D array of greyscale pixels
+    private int[][] get_img() {
+
+    }
 
     // Gets string input from user
     private String get_str(String message) {
@@ -30,11 +33,13 @@ public class BookFolder {
                 if (num >= min && num <= max) {
                     break;
                 } else {
-                    System.out.format("ERROR: Input must be between %.4f and %.4f\n", min, max);
+                    System.out.format("ERROR: Input must be between %.4f and %.4f", min, max);
+                    scanner.next();
                 }
             }
             else {
-                System.out.println("ERROR: Input must be a number\n");
+                System.out.println("ERROR: Input must be a number");
+                scanner.next();
             }
         }
         return num;
@@ -50,11 +55,13 @@ public class BookFolder {
                 if (num >= min && num <= max) {
                     break;
                 } else {
-                    System.out.format("ERROR: Input must be between %d and %d\n", min, max);
+                    System.out.format("ERROR: Input must be between %d and %d", min, max);
+                    scanner.next();
                 }
             }
             else {
-                System.out.println("ERROR: Input must be a number\n");
+                System.out.println("ERROR: Input must be a number");
+                scanner.next();
             }
         }
         return num;
@@ -99,9 +106,10 @@ public class BookFolder {
     private void run() {
         // Get dimensions from user input
         img_name = get_str("\nEnter filename of image\n" +
-                " This image should be black--and-white only\n");
+                " This image should be black--and-white only\n" +
+                " And must be in the current directory\n");
         height = get_num("\nEnter page height in inches\n",
-                0, Float.MAX_VALUE);
+                0, Float.MAX_VALUE); // Change this from MAX_VALUE to something reasonably big
         num_pages = get_num("\nEnter number of pages in book\n" +
                 " Numbered pages (with different numbers on front and back) will count as a single page\n" +
                 " Be sure to include non-numbered pages\n", 0, Float.MAX_VALUE);
