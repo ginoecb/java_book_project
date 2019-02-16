@@ -1,26 +1,48 @@
 package com.github.book_folding_app;
-import java.text.DecimalFormat;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class BookFolder {
-    private String img_name;
-    private float height, width, px_height;
-    private float num_pages;
-    private float offset_front, offset_back;
+    private String img_name, img_resize_name;
+    private float height, width;
+    private int px_height, num_pages;
+    private int offset_front, offset_back;
     private float min_cut_len;
     private short tolerance;
     private Scanner scanner = new Scanner(System.in);
-
-    // Retrieves specified image as a 2D array of greyscale pixels
-    private int[][] get_img() {
-
-    }
 
     // Gets string input from user
     private String get_str(String message) {
         System.out.println(message);
         return scanner.nextLine();
+    }
+
+    // Gets int input from user
+    private int get_num(String message, int min, int max) {
+        short num;
+        while (true) {
+            System.out.println(message);
+            if(scanner.hasNextFloat()) {
+                num = scanner.nextShort();
+                if (num >= min && num <= max) {
+                    break;
+                } else {
+                    System.out.format(
+                            "ERROR: Input must be between %d and %d", min, max);
+                    scanner.next();
+                }
+            }
+            else {
+                System.out.println("ERROR: Input must be a number");
+                scanner.next();
+            }
+        }
+        return num;
     }
 
     // Gets float input from user
@@ -33,7 +55,8 @@ public class BookFolder {
                 if (num >= min && num <= max) {
                     break;
                 } else {
-                    System.out.format("ERROR: Input must be between %.4f and %.4f", min, max);
+                    System.out.format(
+                            "ERROR: Input must be between %.4f and %.4f", min, max);
                     scanner.next();
                 }
             }
@@ -55,7 +78,8 @@ public class BookFolder {
                 if (num >= min && num <= max) {
                     break;
                 } else {
-                    System.out.format("ERROR: Input must be between %d and %d", min, max);
+                    System.out.format(
+                            "ERROR: Input must be between %d and %d", min, max);
                     scanner.next();
                 }
             }
@@ -99,37 +123,128 @@ public class BookFolder {
         return cuts;
     }
 
+    // Convert height from pixels to inches
     private float get_height(float num, float px_height, float height) {
         return num / px_height * height;
     }
 
+    // Convert height from inches to pixels
+    private int get_px_height(float num, float px_height, float height) {
+        return (int)(num / height * px_height);
+    }
+
+    // Retrieve specified image
+    BufferedImage get_img() {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(img_name));
+        }
+        catch (IOException e) {
+            System.out.println("ERROR: File not found");
+        }
+        return img;
+    }
+
+    // Convert image to grayscale
+    BufferedImage get_img_gray(BufferedImage img) {
+        BufferedImage img_grayscale = new BufferedImage(
+                img.getWidth(),
+                img.getHeight(),
+                BufferedImage.TYPE_BYTE_GRAY);
+        Graphics graphics = img_grayscale.getGraphics();
+        graphics.drawImage(img, 0, 0, null);
+        graphics.dispose();
+        return img_grayscale;
+    }
+
+    // Resize image
+    BufferedImage resize_img(BufferedImage img) {
+        BufferedImage img_resize = new BufferedImage(num_pages, (int)height, BufferedImage.TYPE_INT_RGB);
+        return img_resize;
+    }
+
+    // Convert grayscale image to 2D array of pixels
+
+    // Save image
+
+
+    private void test() {
+        img_name = get_str("\nEnter image name\n");
+        BufferedImage img = get_img();
+        // Try using this:
+        // C:\Users\g3bry\Desktop\Python\BookProject\pugtest.png
+
+        // This works as long as the image is placed in the \BookApp dir
+        String working_dir = System.getProperty("user.dir");
+        String abs_file_path = working_dir + File.separator + img_name;
+        System.out.println(abs_file_path);
+
+        // Try resizing
+        num_pages = 100;
+        height = 10f;
+        px_height = (int)(height * 96);
+        Image img_temp = img.getScaledInstance(num_pages, px_height, Image.SCALE_SMOOTH);
+        BufferedImage img_resize = new BufferedImage(num_pages, px_height, BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D graphics = img_resize.createGraphics();
+        graphics.drawImage(img_temp, 0, 0, null);
+        graphics.dispose();
+
+        // This works
+        BufferedImage img_gray = get_img_gray(img_resize);
+
+        // Write manipulated file
+        File out_file = new File(working_dir + File.separator + "test_out.png");
+        try {
+            ImageIO.write(img_resize, "png", out_file);
+        }
+        catch (IOException e) {
+            System.out.println("Error");
+        }
+
+    }
+
     private void run() {
         // Get dimensions from user input
-        img_name = get_str("\nEnter filename of image\n" +
+        img_name = get_str(
+                "\nEnter filename of image\n" +
                 " This image should be black--and-white only\n" +
                 " And must be in the current directory\n");
-        height = get_num("\nEnter page height in inches\n",
-                0, Float.MAX_VALUE); // Change this from MAX_VALUE to something reasonably big
-        num_pages = get_num("\nEnter number of pages in book\n" +
+        height = get_num(
+                "\nEnter page height in inches\n",
+                0,
+                Float.MAX_VALUE); // Change this from MAX_VALUE to something reasonably big
+        num_pages = get_num(
+                "\nEnter number of pages in book\n" +
                 " Numbered pages (with different numbers on front and back) will count as a single page\n" +
-                " Be sure to include non-numbered pages\n", 0, Float.MAX_VALUE);
-        offset_front = get_num("\nEnter number of pages to offset image from the front cover\n",
-                0, num_pages);
-        offset_back = get_num("\nEnter number of pages to offset image from the back cover\n",
-                0, num_pages);
-        min_cut_len = get_num("\nEnter the minimum cut length in inches for each page\n",
-                0, height);
-        tolerance = get_num("\nInput a black-white pixel tolearnce (0 - 255)\n" +
+                " Be sure to include non-numbered pages\n",
+                0,
+                Integer.MAX_VALUE);
+        offset_front = get_num(
+                "\nEnter number of pages to offset image from the front cover\n",
+                0,
+                num_pages);
+        offset_back = get_num(
+                "\nEnter number of pages to offset image from the back cover\n",
+                0,
+                num_pages);
+        min_cut_len = get_num(
+                "\nEnter the minimum cut length in inches for each page\n",
+                0,
+                height);
+        tolerance = get_num(
+                "\nInput a black-white pixel tolearnce (0 - 255)\n" +
                 " All values above this will not be considered part of the image\n",
-                (short)0, (short)255);
+                (short)0,
+                (short)255);
         width = num_pages - offset_front - offset_back;
         // 1 in : 96 px
-        px_height = height * 96;
+        px_height = (int)(height * 96);
 
     }
 
     public static void main(String[] args) {
         BookFolder bookFolder = new BookFolder();
-        bookFolder.run();
+        //bookFolder.run();
+        bookFolder.test();
     }
 }

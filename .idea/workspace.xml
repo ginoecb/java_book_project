@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="37dc1861-899d-4bf2-8d5f-5f15145ed4ca" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BookApp/com/github/book_folding_app/BookFolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookApp/com/github/book_folding_app/BookFolder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,17 +17,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+            <state relative-caret-position="426">
+              <caret line="195" column="59" lean-forward="true" selection-start-line="195" selection-start-column="59" selection-end-line="195" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#get_str#0;class#BookFolder#0" />
                 <element signature="method#get_num#0;class#BookFolder#0" />
-                <element signature="method#get_short#0;class#BookFolder#0" />
+                <element signature="method#get_num#1;class#BookFolder#0" />
+                <element signature="method#get_num#2;class#BookFolder#0" />
                 <element signature="method#get_page_cuts#0;class#BookFolder#0" />
                 <element signature="method#check_page_cuts#0;class#BookFolder#0" />
-                <element signature="e#1534#1535#0" expanded="true" />
-                <element signature="e#1566#1567#0" expanded="true" />
+                <element signature="method#get_img#0;class#BookFolder#0" />
+                <element signature="method#get_img_gray#0;class#BookFolder#0" />
+                <element signature="method#resize_img#0;class#BookFolder#0" />
+                <element signature="method#run#0;class#BookFolder#0" />
               </folding>
             </state>
           </provider>
@@ -63,8 +65,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="955" />
-    <option name="width" value="972" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
     <option name="height" value="1087" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -106,7 +108,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550187494268" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550213281729" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -159,7 +161,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="955" y="0" width="972" height="1087" extended-state="0" />
+    <frame x="953" y="0" width="974" height="1087" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.3665208" />
@@ -171,7 +173,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3259958" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3207547" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -195,17 +197,20 @@
     <entry file="file://$PROJECT_DIR$/src/bookFold.java" />
     <entry file="file://$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+        <state relative-caret-position="426">
+          <caret line="195" column="59" lean-forward="true" selection-start-line="195" selection-start-column="59" selection-end-line="195" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#get_str#0;class#BookFolder#0" />
             <element signature="method#get_num#0;class#BookFolder#0" />
-            <element signature="method#get_short#0;class#BookFolder#0" />
+            <element signature="method#get_num#1;class#BookFolder#0" />
+            <element signature="method#get_num#2;class#BookFolder#0" />
             <element signature="method#get_page_cuts#0;class#BookFolder#0" />
             <element signature="method#check_page_cuts#0;class#BookFolder#0" />
-            <element signature="e#1534#1535#0" expanded="true" />
-            <element signature="e#1566#1567#0" expanded="true" />
+            <element signature="method#get_img#0;class#BookFolder#0" />
+            <element signature="method#get_img_gray#0;class#BookFolder#0" />
+            <element signature="method#resize_img#0;class#BookFolder#0" />
+            <element signature="method#run#0;class#BookFolder#0" />
           </folding>
         </state>
       </provider>
