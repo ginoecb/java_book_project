@@ -1,6 +1,8 @@
 package com.github.book_folding_app;
 import java.awt.*;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +11,9 @@ import javax.imageio.ImageIO;
 
 public class BookFolder {
     private String img_name, img_resize_name;
-    private float height, width;
-    private int px_height, num_pages;
+    private float height;
+    private int num_pages;
+    private int px_height, px_width;
     private int offset_front, offset_back;
     private float min_cut_len;
     private short tolerance;
@@ -189,6 +192,7 @@ public class BookFolder {
         height = 10f;
         px_height = (int)(height * 96);
         img_name = get_str("\nEnter image name\n");
+        px_width = num_pages;
         BufferedImage img = edit_img();
         // Try using this:
         // C:\Users\g3bry\Desktop\Python\BookProject\pugtest.png
@@ -197,7 +201,33 @@ public class BookFolder {
         String abs_file_path = working_dir + File.separator + img_name;
         System.out.println(abs_file_path);
 
-        save_img(img, working_dir, "test_out" + img_name.substring(img_name.length() - 4));
+        save_img(img, working_dir, "test_out" + img_name.substring(img_name.lastIndexOf('.')));
+
+        // Converting image to array
+        int[][] arr = new int[px_width][px_height];
+        for (int x = 0; x < px_width; x++) {
+            for (int y = 0; y < px_height; y++) {
+                arr[x][y] = img.getRGB(x, y);
+                //System.out.println(px & 0xFF);
+            }
+        }
+
+        /*
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(img, img_name.substring(img_name.lastIndexOf('.') + 1), baos);
+        }
+        catch (IOException e) {
+            System.out.println("ERROR: File not saved as ByteArrayOutputStream");
+        }
+        byte [] data = baos.toByteArray();
+        for (int i = 0; i < data.length; i++) {
+            // Masks off sign bits
+            System.out.println(data[i] & 0xFF);
+            //System.out.println(data[i]);
+        }
+        System.out.println(data.length);
+        */
     }
 
     private void run() {
@@ -233,7 +263,7 @@ public class BookFolder {
                 " All values above this will not be considered part of the image\n",
                 (short)0,
                 (short)255);
-        width = num_pages - offset_front - offset_back;
+        px_width = num_pages - offset_front - offset_back;
         // 1 in : 96 px
         px_height = (int)(height * 96);
 
