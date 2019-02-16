@@ -128,13 +128,8 @@ public class BookFolder {
         return num / px_height * height;
     }
 
-    // Convert height from inches to pixels
-    private int get_px_height(float num, float px_height, float height) {
-        return (int)(num / height * px_height);
-    }
-
     // Retrieve specified image
-    BufferedImage get_img() {
+    private BufferedImage get_img() {
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File(img_name));
@@ -145,8 +140,18 @@ public class BookFolder {
         return img;
     }
 
+    // Resize image
+    private BufferedImage resize_img(BufferedImage img) {
+        Image img_temp = img.getScaledInstance(num_pages, px_height, Image.SCALE_SMOOTH);
+        BufferedImage img_resize = new BufferedImage(num_pages, px_height, BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D graphics = img_resize.createGraphics();
+        graphics.drawImage(img_temp, 0, 0, null);
+        graphics.dispose();
+        return img_resize;
+    }
+
     // Convert image to grayscale
-    BufferedImage get_img_gray(BufferedImage img) {
+    private BufferedImage get_img_gray(BufferedImage img) {
         BufferedImage img_grayscale = new BufferedImage(
                 img.getWidth(),
                 img.getHeight(),
@@ -157,50 +162,42 @@ public class BookFolder {
         return img_grayscale;
     }
 
-    // Resize image
-    BufferedImage resize_img(BufferedImage img) {
-        BufferedImage img_resize = new BufferedImage(num_pages, (int)height, BufferedImage.TYPE_INT_RGB);
-        return img_resize;
-    }
-
     // Convert grayscale image to 2D array of pixels
 
-    // Save image
+    // Perform image manipulation functions
+    private BufferedImage edit_img() {
+        BufferedImage img = get_img();
+        BufferedImage img_resize = resize_img(img);
+        BufferedImage img_gray = get_img_gray(img_resize);
+        return img_gray;
+    }
 
+    // Save image
+    private void save_img(BufferedImage img, String file_path, String file_name) {
+        File out_file = new File(file_path + File.separator + file_name);
+        System.out.println(out_file);
+        try {
+            ImageIO.write(img, img_name.substring(img_name.lastIndexOf('.') + 1), out_file);
+        }
+        catch (IOException e) {
+            System.out.println("ERROR: File not saved");
+        }
+    }
 
     private void test() {
+        num_pages = 100;
+        height = 10f;
+        px_height = (int)(height * 96);
         img_name = get_str("\nEnter image name\n");
-        BufferedImage img = get_img();
+        BufferedImage img = edit_img();
         // Try using this:
         // C:\Users\g3bry\Desktop\Python\BookProject\pugtest.png
-
-        // This works as long as the image is placed in the \BookApp dir
+        // Works as long as the image is placed in the \BookApp dir
         String working_dir = System.getProperty("user.dir");
         String abs_file_path = working_dir + File.separator + img_name;
         System.out.println(abs_file_path);
 
-        // Try resizing
-        num_pages = 100;
-        height = 10f;
-        px_height = (int)(height * 96);
-        Image img_temp = img.getScaledInstance(num_pages, px_height, Image.SCALE_SMOOTH);
-        BufferedImage img_resize = new BufferedImage(num_pages, px_height, BufferedImage.TYPE_BYTE_GRAY);
-        Graphics2D graphics = img_resize.createGraphics();
-        graphics.drawImage(img_temp, 0, 0, null);
-        graphics.dispose();
-
-        // This works
-        BufferedImage img_gray = get_img_gray(img_resize);
-
-        // Write manipulated file
-        File out_file = new File(working_dir + File.separator + "test_out.png");
-        try {
-            ImageIO.write(img_resize, "png", out_file);
-        }
-        catch (IOException e) {
-            System.out.println("Error");
-        }
-
+        save_img(img, working_dir, "test_out" + img_name.substring(img_name.length() - 4));
     }
 
     private void run() {

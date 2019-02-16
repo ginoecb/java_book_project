@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37dc1861-899d-4bf2-8d5f-5f15145ed4ca" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BookApp/com/github/book_folding_app/BookFolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookApp/com/github/book_folding_app/BookFolder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_out.png" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="195" column="59" lean-forward="true" selection-start-line="195" selection-start-column="59" selection-end-line="195" selection-end-column="59" />
+            <state relative-caret-position="120">
+              <caret line="179" column="61" selection-start-line="179" selection-start-column="61" selection-end-line="179" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#get_str#0;class#BookFolder#0" />
@@ -28,8 +31,8 @@
                 <element signature="method#get_page_cuts#0;class#BookFolder#0" />
                 <element signature="method#check_page_cuts#0;class#BookFolder#0" />
                 <element signature="method#get_img#0;class#BookFolder#0" />
-                <element signature="method#get_img_gray#0;class#BookFolder#0" />
                 <element signature="method#resize_img#0;class#BookFolder#0" />
+                <element signature="method#get_img_gray#0;class#BookFolder#0" />
                 <element signature="method#run#0;class#BookFolder#0" />
               </folding>
             </state>
@@ -197,8 +200,8 @@
     <entry file="file://$PROJECT_DIR$/src/bookFold.java" />
     <entry file="file://$PROJECT_DIR$/src/com/github/book_folding_app/BookFolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="195" column="59" lean-forward="true" selection-start-line="195" selection-start-column="59" selection-end-line="195" selection-end-column="59" />
+        <state relative-caret-position="120">
+          <caret line="179" column="61" selection-start-line="179" selection-start-column="61" selection-end-line="179" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#get_str#0;class#BookFolder#0" />
@@ -208,8 +211,8 @@
             <element signature="method#get_page_cuts#0;class#BookFolder#0" />
             <element signature="method#check_page_cuts#0;class#BookFolder#0" />
             <element signature="method#get_img#0;class#BookFolder#0" />
-            <element signature="method#get_img_gray#0;class#BookFolder#0" />
             <element signature="method#resize_img#0;class#BookFolder#0" />
+            <element signature="method#get_img_gray#0;class#BookFolder#0" />
             <element signature="method#run#0;class#BookFolder#0" />
           </folding>
         </state>
